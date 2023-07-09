@@ -13,8 +13,13 @@ import {
 import { getUser } from "~/session.server";
 import stylesheet from "~/tailwind.css";
 
+import gridStlyes from "react-grid-layout/css/styles.css"
+import resizableStyles from 'react-resizable/css/styles.css'
+
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: gridStlyes },
+  { rel: "stylesheet", href: resizableStyles },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
