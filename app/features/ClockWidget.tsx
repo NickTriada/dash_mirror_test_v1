@@ -1,11 +1,11 @@
-import myImage from "~/img/clock_1.png";
+// import myImage from "~/img/clock_1.png";
 // import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { format as BBLKJ } from "date-fns";
 
 const useTime = () => {
-  const [time, setTime] = useState("ABC");
-  const [date, setDate] = useState("ABC");
+  const [time, setTime] = useState("00:00:00");
+  const [date, setDate] = useState("01 July 2023");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,10 +22,10 @@ export default function ClockWidget() {
   const [time, date] = useTime();
 
   return (
-    <div className="border-2 border-solid border-red-800 bg-slate-800 text-white">
+    <div className="border-2 border-solid border-red-800 bg-slate-800 text-white text-6xl content-center">
       <p>{time}</p>
       <p>{date}</p>
-      <h1>Welcome to My React App</h1>
+      {/* <h1>Welcome to My React App</h1> */}
       {/* <img src={myImage} alt="My Image" /> */}
       {/* <img src="/img/clock_1.png" alt="clock" /> */}
     </div>
