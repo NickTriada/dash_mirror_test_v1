@@ -4,17 +4,44 @@ import ClockWidget from "~/features/ClockWidget";
 import CalendarWidget from "~/features/CalendarWidget";
 import myImage from "~/img/clock_1.png";
 import useRss from "~/features/useRss";
+import WeatherWidget from "~/features/WeatherWidget";
+// import WeatherWidget from "@eggtronic/react-weather-widget";
 
 console.log(myImage);
 
-//import clock1 from '/img/clock_1.png';
+//import clock1 from '/img/clock_1.png';(
+type ButtonVariant = "primary" | "secondary";
+type ButtonType = {
+  variant: ButtonVariant;
+  onClick: () => void;
+  children: React.ReactNode;
+};
+
+function getButtonVariant(variant: ButtonVariant): string {
+  switch (variant) {
+    case "primary":
+      return "border-2 border-solid border-red-500 bg-slate-300";
+    case "secondary":
+      return "border-2 border-solid border-blue-500 bg-slate-300";
+  }
+}
+
+const Button = ({ onClick, variant, children }: ButtonType) => {
+  return (
+    <button className={getButtonVariant(variant)} onClick={onClick}>
+      {children}
+    </button>
+  );
+};
 
 export default function MyFirstGrid() {
   const rssFeed = useRss();
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState(1);
   const limit = 5;
   const start = (page - 1) * limit;
   const finish = start + limit;
+  let xn = rssFeed?.items.length ?? 0;
+  const maxpage = Math.round(xn / limit);
   // console.log(rssFeed);
   console.log(start, finish);
 
@@ -30,9 +57,27 @@ export default function MyFirstGrid() {
     { i: "a", x: 0, y: 0, w: 4, h: 5, minW: 4, maxW: 6, maxH: 6 },
     { i: "b", x: 4, y: 0, w: 4, h: 5, minW: 4, maxW: 6, maxH: 6 },
     { i: "c", x: 8, y: 0, w: 4, h: 5, minW: 4, maxW: 6, maxH: 6 },
+    { i: "d", x: 8, y: 10, w: 4, h: 6, minW: 4, maxW: 6, maxH: 6 },
   ];
-  // /workspace/dash_mirror_test_v1/app/routes/img/clock_1.png
-  // https://reactjs.org/logo-og.png
+
+  // function abc(x) {
+  //   return 1
+  // }
+
+  // const abcd = (x) => { return 2 }
+
+  const prevPage = () =>
+    setPage((p) => {
+      let nextP = p <= 1 ? maxpage : p - 1;
+      return nextP;
+    });
+
+  const nextPage = () =>
+    setPage((p) => {
+      let nextP = maxpage <= p ? 1 : p + 1;
+      return nextP;
+    });
+
   return (
     <GridLayout
       className="layout"
@@ -50,17 +95,13 @@ export default function MyFirstGrid() {
       </div>
 
       <div key="c">
-        <button
-          onClick={() =>
-            setPage((p) => {
-              console.log(p);
-              return p + 1;
-            })
-          }
-        >
-          xx
-        </button>
-        {rssFeed === null ? "loading..." : <>{rssFeed.title}</>}
+        <Button variant="primary" onClick={prevPage}>
+          &lt;
+        </Button>
+        <Button variant="secondary" onClick={nextPage}>
+          &gt;
+        </Button>
+        {rssFeed === null ? "loading..." : null}
         {rssFeed?.items?.slice(start, finish).map((x) => {
           return (
             <div key={x.id}>
@@ -69,7 +110,11 @@ export default function MyFirstGrid() {
             </div>
           );
         })}
-        CELL FOR NEWS
+      </div>
+
+      <div key="d">
+        <WeatherWidget />
+        
       </div>
     </GridLayout>
   );
