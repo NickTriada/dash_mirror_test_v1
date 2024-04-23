@@ -7,6 +7,8 @@ import useRss from "~/features/useRss";
 import WeatherWidget from "~/features/WeatherWidget";
 // import WeatherWidget from "@eggtronic/react-weather-widget";
 
+import Map from "./Map"; 
+
 console.log(myImage);
 
 //import clock1 from '/img/clock_1.png';(
@@ -88,6 +90,10 @@ export default function MyFirstGrid() {
     >
       <div key="a">
         <ClockWidget />
+        <Map
+          origin="200 S Third St, San Jose, CA"
+          destination="47400 Kato Rd, Fremont, CA"
+        />
       </div>
 
       <div key="b">
